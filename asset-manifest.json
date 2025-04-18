@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/interior-design-swatches/static/css/main.b6a2f305.css",
+    "main.js": "/interior-design-swatches/static/js/main.a1590424.js",
+    "static/js/453.369118b2.chunk.js": "/interior-design-swatches/static/js/453.369118b2.chunk.js",
+    "index.html": "/interior-design-swatches/index.html",
+    "main.b6a2f305.css.map": "/interior-design-swatches/static/css/main.b6a2f305.css.map",
+    "main.a1590424.js.map": "/interior-design-swatches/static/js/main.a1590424.js.map",
+    "453.369118b2.chunk.js.map": "/interior-design-swatches/static/js/453.369118b2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b6a2f305.css",
+    "static/js/main.a1590424.js"
+  ]
+}
