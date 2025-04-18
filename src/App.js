@@ -7,10 +7,37 @@ import IsometricKitchen from './components/IsometricKitchen';
 import { IsometricSwatches, DefaultSwatches } from './components/Swatches'
 import { Typography, Layout } from "antd";
 import { Button } from "antd";
+import { createStyles } from 'antd-style';
 
 const { Header, Content, Footer } = Layout;
 
+const useStyle = createStyles(({ prefixCls, css }) => ({
+  linearGradientButton: css`
+    &.${prefixCls}-btn-primary:not([disabled]):not(.${prefixCls}-btn-dangerous) {
+      > span {
+        position: relative;
+      }
+
+      &::before {
+        content: '';
+        background: linear-gradient(135deg, #6253e1, #04befe);
+        position: absolute;
+        inset: -1px;
+        opacity: 1;
+        transition: all 0.3s;
+        border-radius: inherit;
+      }
+
+      &:hover::before {
+        opacity: 0;
+      }
+    }
+  `,
+}));
+
 function App() {
+  const { styles } = useStyle();
+
   const [isometricMode, setisometricMode] = useState(false)
   const [kitchenVersion, setKitchenVersion] = useState(0);
   const [swatchTiles, setSwatchTiles] = useState({
@@ -92,12 +119,13 @@ function App() {
 
   return (
     <div className="App">
-      <Layout>
-        <Header style={{ backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '10%' }} id="header">
+      <Layout style={{ minHeight: '100vh' }}>
+        <Header id="header">
           <h1>Shuffle Designer</h1>
           <Button onClick={() => setisometricMode(!isometricMode)}>Switch mode</Button>
         </Header>
-        <Content>
+
+        <Content style={{ flex: 1, overflowY: 'auto' }}>
           {isometricMode ? (
             <div className="swatch-tiles">
               <IsometricKitchen swatchTiles={swatchTiles} key={kitchenVersion} />
@@ -107,18 +135,25 @@ function App() {
             <div className="swatch-tiles">
               <DefaultSwatches swatchTiles={swatchTiles} toggleLock={toggleLock} />
             </div>
-
           )}
-          <Footer id="footer" style={{height: '10%'}}>
-          <Button type="primary" onClick={shuffleSwatches} style={{ width: '100%' }}>
+        </Content>
+
+        <Footer id="footer">
+          <Button
+            block
+            type="primary"
+            onClick={shuffleSwatches}
+            size="large"
+            id="shuffle-button"
+            className={styles.linearGradientButton}
+          >
             Shuffle
           </Button>
         </Footer>
-
-        </Content>
       </Layout>
     </div>
   );
+
 }
 
 export default App;

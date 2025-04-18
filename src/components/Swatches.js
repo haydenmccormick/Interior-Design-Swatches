@@ -38,26 +38,36 @@ export function IsometricSwatches({ swatchTiles, toggleLock }) {
     </div>
   );
 }
-export function DefaultSwatches({ swatchTiles, toggleLock }) {
 
+export function DefaultSwatches({ swatchTiles, toggleLock }) {
   return (
     <div className="default-container">
       <div className="default-swatch-container">
-        {Object.keys(swatchTiles).map((key) => (
-            <div key={key} className="swatch-tile">
-              {swatchTiles[key].type == "image" ? 
-                <img className="swatch-tile-preview" src={swatchTiles[key].texture} alt={swatchTiles[key].name} />:
-                <div className="swatch-tile-preview" style={{ backgroundColor: swatchTiles[key].texture }}></div>
-              }
-              <h4 className="label">{swatchTiles[key].name}</h4>
-              <div className="swatch-lock" onClick={() => toggleLock(key)}>
-                {swatchTiles[key].locked ?
-                  <LockOutlined />
-                   :
-                  <UnlockOutlined />
-                }
-              </div>
+        {Object.entries(swatchTiles).map(([key, tile]) => (
+          <div key={key} className="swatch-tile">
+            {tile.type === "image" ? (
+              <img
+                className="swatch-tile-preview"
+                src={tile.texture}
+                alt={tile.name}
+              />
+            ) : (
+              <div
+                className="swatch-tile-preview"
+                style={{ backgroundColor: tile.texture }}
+              />
+            )}
+
+            <h4 className="label">{tile.name}</h4>
+
+            {/* className now adds `locked` when tile.locked === true */}
+            <div
+              className={`swatch-lock${tile.locked ? " locked" : ""}`}
+              onClick={() => toggleLock(key)}
+            >
+              {tile.locked ? <LockOutlined /> : <UnlockOutlined />}
             </div>
+          </div>
         ))}
       </div>
     </div>
