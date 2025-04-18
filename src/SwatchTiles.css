@@ -35,6 +35,7 @@
   .hexagon {
     width: 100px;
     aspect-ratio: 1 / 1;
+    display: block;
     background: white;
     clip-path: polygon(
       50% 0%,
@@ -46,15 +47,85 @@
     );
     transition: background 0.3s ease;
     cursor: pointer;
+    position: relative;
   }
   
-  .hexagon:hover {
-    background: #bbb;
+  /* .hex-swatch-tile-preview:hover {
+    filter: brightness(50%);
+  } */
+
+  .swatch-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .swatch-tile-preview {
+    width: 100%;
+    object-fit: cover;
+    display: block;  
+    aspect-ratio: 1 / 1.5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .hex-swatch-tile-preview {
+    width: 100%;
+    object-fit: cover;
+    display: block;  
     aspect-ratio: 1 / 1;
   }
+
+  .hex-swatch-lock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    border-radius: 6px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .hex-swatch-lock.invisible {
+    display: none;
+  }
+
+  .hex-swatch-tile-preview:hover + .hex-swatch-lock.invisible {
+    display:flex;
+  }
+
+  
+  .swatch-lock {
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
+    width: 20%;
+  }
+
+  .swatch-lock:hover {
+    cursor: pointer;
+    
+  }
+
+  /* highlight border + subtle scale on hover
+.hex-row.is-hovered .hex-border,
+.swatch-tile.is-hovered {
+  border-color: #ffbf45;
+  transform: scale(1.04);
+  transition: transform 0.15s ease;
+} */
+
   
   /* .label {
     font-size: 0.9rem;

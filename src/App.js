@@ -14,12 +14,12 @@ function App() {
   const [isometricMode, setisometricMode] = useState(false)
   const [kitchenVersion, setKitchenVersion] = useState(0);
   const [swatchTiles, setSwatchTiles] = useState({
-    floor: { name: "Floor", type: "image", texture: null },
-    counter: { name: "Counter", type: "image", texture: null },
-    backsplash: { name: "Backsplash", type: "image", texture: null },
-    lower_cabinet: { name: "Lower Cabinets", type: "color", texture: null },
-    upper_cabinet: { name: "Upper Cabinets", type: "color", texture: null },
-    wall: { name: "Wall", type: "color", texture: null },
+    floor: { name: "Floor", type: "image", texture: null, locked: false },
+    counter: { name: "Counter", type: "image", texture: null, locked: false },
+    backsplash: { name: "Backsplash", type: "image", texture: null, locked: false },
+    lower_cabinet: { name: "Lower Cabinets", type: "color", texture: null, locked: false },
+    upper_cabinet: { name: "Upper Cabinets", type: "color", texture: null, locked: false },
+    wall: { name: "Wall", type: "color", texture: null, locked: false },
   });
   const [candidates, setCandidates] = useState({ 
     counter: [
@@ -68,6 +68,8 @@ function App() {
   function shuffleSwatches() {
     let newSwatchTiles = { ...swatchTiles };
     Object.keys(newSwatchTiles).forEach((tile) => {
+      // Skip locked tiles
+      if (newSwatchTiles[tile].locked) return;
       const currentIndex = candidates[tile].findIndex(
         (texture) => texture === newSwatchTiles[tile].texture
       );
@@ -82,6 +84,12 @@ function App() {
     setKitchenVersion(v => v + 1);
   }
 
+  function toggleLock(tile) {
+    let newSwatchTiles = { ...swatchTiles };
+    newSwatchTiles[tile].locked = !newSwatchTiles[tile].locked;
+    setSwatchTiles(newSwatchTiles);
+  }
+
   return (
     <div className="App">
       <Layout>
@@ -92,12 +100,12 @@ function App() {
         <Content>
           {isometricMode ? (
             <div className="swatch-tiles">
-              <IsometricKitchen  swatchTiles={swatchTiles} key={kitchenVersion}/>
-              <IsometricSwatches swatchTiles={swatchTiles} />
+              <IsometricKitchen swatchTiles={swatchTiles} key={kitchenVersion} />
+              <IsometricSwatches swatchTiles={swatchTiles} toggleLock={toggleLock} />
             </div>
           ) : (
             <div className="swatch-tiles">
-              <DefaultSwatches swatchTiles={swatchTiles} shuffleFunc={shuffleSwatches} />
+              <DefaultSwatches swatchTiles={swatchTiles} toggleLock={toggleLock} />
             </div>
 
           )}
